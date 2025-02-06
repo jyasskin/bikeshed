@@ -589,7 +589,7 @@ so they're specified before the individual commands:
 	errors in resolving autolinks are "link-error",
 	things that look a little questionable but are totally okay to generate a document with are "warning",
 	and things that just violate one of the opt-in lint checks are "lint".
-	(The "message" level is for non-errors, like informing you that it's updating its datafiles.) 
+	(The "message" level is for non-errors, like informing you that it's updating its datafiles.)
 
 	The `--die-on` flag controls which sorts of errors
 	cause Bikeshed to fail to produce output
@@ -1485,6 +1485,9 @@ There are several additional optional keys:
 		you can suppress this with `Boilerplate: script-dfn-panel no, style-dfn-panel no`
 		and supply your own if desired.
 	* <dfn>Metadata Include</dfn> and <dfn>Metadata Order</dfn> are defined in [[#rearranging-metadata]].
+	* <dfn>Collapse Metadata</dfn> is a <a>boolish</a> (defaulting to false) that sets the
+		[=[COLLAPSE-METADATA]=] text macro to ask the boilerplate to initialize document metadata
+		sections to collapsed.
 	* <dfn>Remove Multiple Links</dfn> is a <a>boolish</a> (defaulting to false)
 		that controls whether Bikeshed automatically suppresses multiple autolinks to the same term
 		in a single paragraph.
@@ -1827,7 +1830,7 @@ which expand into other text.
 Macros can be used in several places,
 which dictate how they're parsed:
 
-* in place of ordinary text/markup, like `<p>It's [YEAR] right now`, 
+* in place of ordinary text/markup, like `<p>It's [YEAR] right now`,
 	where their contents are parsed as HTML
 * in HTML attributes, like `<a href=[LATEST]>`,
 	where their contents are parsed as HTML attribute value
@@ -1897,11 +1900,11 @@ Mostly, these are just used by your boilerplate file
 and won't be seen in the actual document source.
 
 <ul dfn-type=dfn dfn-for=macro export>
-	* <dfn>`[TITLE]`</dfn> is the spec's title 
-		(taken from [=Title=]), 
+	* <dfn>`[TITLE]`</dfn> is the spec's title
+		(taken from [=Title=]),
 		formatted appropriately for the <{title}> element.
-	* <dfn>`[SPECTITLE]`</dfn> is the spec's title 
-		(taken from [=H1=], if set; otherwise from [=Title=]), 
+	* <dfn>`[SPECTITLE]`</dfn> is the spec's title
+		(taken from [=H1=], if set; otherwise from [=Title=]),
 		formatted as normal HTML.
 	* <dfn>`[SHORTNAME]`</dfn> gives the document's shortname, like "css-cascade"
 		(taken from [=Shortname=]).
@@ -1956,6 +1959,7 @@ and won't be seen in the actual document source.
 		(taken from [=Mailing List=] and [=Mailing List Archives=])
 	* <dfn>`[W3C-STYLESHEET-URL]`</dfn> and <dfn>`[W3C-STATUS-URL]`</dfn> give URLs to the correct W3C stylesheet and status description, if you're in the W3C [=Org=].
 		(taken from [=metadata/Status=])
+	* <dfn>`[COLLAPSE-METADATA]`</dfn> is "yes" if the [=Collapse Metadata=] [=boolish=] is true.
 </ul>
 
 As these are substituted at the text level, not the higher HTML level, you can use them *anywhere*, including in attribute values.
@@ -2039,7 +2043,7 @@ These are used for several types of [[#def-blocks|definition tables]],
 [[#including|file includes]],
 and [[#bikeshed-data|bikeshed data sources]].
 
-Datablocks are specially parsed: 
+Datablocks are specially parsed:
 initially, the parser just jumps straight to the closing tag
 without interpreting anything inside of them,
 so there's no risk of Bikeshed-isms or inline Markdown
@@ -3063,7 +3067,7 @@ This means that, for example,
 if you are trying to link to the term `a < b`,
 you write that literally within the autolink,
 like `[=a < b=]`.
-(On the other hand, 
+(On the other hand,
 the definition is likely written normally, as `<dfn>a &lt; b</dfn>`.)
 
 The inside syntax contains 1-4 segments, separated by certain characters:
@@ -3106,7 +3110,7 @@ The inside syntax contains 1-4 segments, separated by certain characters:
 	<p class=example>`[=do foo|when foo is done=]` will link to a `<dfn dfn>do foo</dfn>`,
 		but will display "when foo is done" as the visible text of the link.
 
-	Unlike the rest of the autolink's insides, 
+	Unlike the rest of the autolink's insides,
 	the visible text *is* parsed as normal Bikeshed text,
 	and can use any of the ordinary HTML/Markdown/Bikeshed constructs,
 	like `[=do foo|when <b>foo</b> is done=]`,
@@ -3114,7 +3118,7 @@ The inside syntax contains 1-4 segments, separated by certain characters:
 	(such as literal `<` characters indicating the start of an HTML tag).
 	This segment is ended when the wrapper's ending characters are encountered literally;
 	you can use HTML escapes or [=Bikeshed escapes=]
-	to use those characters in your visible text. 
+	to use those characters in your visible text.
 
 	Note: Many variations on the linking text are automatically handled by Bikeshed
 	and don't need manual adjustment via the visible text;

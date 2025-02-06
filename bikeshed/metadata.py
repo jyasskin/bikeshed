@@ -64,6 +64,7 @@ class MetadataManager:
         self.audience: list[str] = []
         self.blockElements: list[str] = []
         self.boilerplate: config.BoolSet = config.BoolSet(default=True)
+        self.collapseMetadata: bool = False
         self.canIUseURLs: list[str] = []
         self.canonicalURL: str | None = None
         self.complainAbout: config.BoolSet = config.BoolSet(["mixed-indents"])
@@ -362,6 +363,8 @@ class MetadataManager:
             macros["mailinglist"] = self.mailingList
         if self.mailingListArchives:
             macros["mailinglistarchives"] = self.mailingListArchives
+        if self.collapseMetadata:
+            macros["collapse-metadata"] = "yes"
         if doc.doctype.org.name == "W3C":
             statusName = doc.doctype.status.name
             if statusName == "FPWD":
@@ -1379,6 +1382,7 @@ KNOWN_KEYS = {
     "Audience": Metadata("Audience", "audience", joinList, parseAudience),
     "Block Elements": Metadata("Block Elements", "blockElements", joinList, parseCommaSeparated),
     "Boilerplate": Metadata("Boilerplate", "boilerplate", joinBoolSet, parseBoilerplate),
+    "Collapse Metadata": Metadata("Collapse Metadata", "collapseMetadata", joinValue, parseBoolean),
     "Can I Use Url": Metadata("Can I Use URL", "canIUseURLs", joinList, parseLiteralList),
     "Canonical Url": Metadata("Canonical URL", "canonicalURL", joinValue, parseLiteral),
     "Complain About": Metadata("Complain About", "complainAbout", joinBoolSet, parseComplainAbout),

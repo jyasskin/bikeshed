@@ -1,0 +1,15 @@
+<pre class=metadata>
+Title: Foo
+Shortname: foo
+Level: 1
+Org: w3c
+Group: tag
+Status: UD
+ED: http://example.com/foo
+Abstract: Testing that Collapse Metadata works.
+Editor: Example Editor
+Date: 1970-01-01
+Collapse Metadata: yes
+</pre>
+
+[COLLAPSE-METADATA]

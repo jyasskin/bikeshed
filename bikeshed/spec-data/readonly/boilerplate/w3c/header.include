@@ -13,7 +13,11 @@
   <h1 id="title" class="p-name no-ref">[TITLE]</h1>
   <p id='w3c-state'><a href='[W3C-STATUS-URL]'>[LONGSTATUS]</a>,
     <time class="dt-updated" datetime="[ISODATE]">[DATE]</time></p>
-  <details open>
+  <details open exclude-if="text macro: COLLAPSE-METADATA">
+    <summary>More details about this document</summary>
+    <div data-fill-with="spec-metadata"></div>
+  </details>
+  <details include-if="text macro: COLLAPSE-METADATA">
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata"></div>
   </details>

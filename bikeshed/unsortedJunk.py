@@ -1100,7 +1100,7 @@ def cleanupHTML(doc: t.SpecT) -> None:
             h.addClass(doc, el, "def")
 
         # Tag classes on wide types of dfns/links
-        if el.tag in config.dfnElements:
+        if el.tag == "dfn":
             if el.get("data-dfn-type") in config.idlTypes:
                 h.addClass(doc, el, "idl-code")
             if el.get("data-dfn-type") in config.maybeTypes.union(config.linkTypeToDfnType["propdesc"]):

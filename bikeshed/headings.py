@@ -7,10 +7,13 @@ from . import messages as m
 def processHeadings(doc: t.SpecT, scope: str = "doc") -> None:
     # scope arg can be "doc" or "all"
     # "doc" ignores things that are part of boilerplate
-    for el in h.findAll("h2, h3, h4, h5, h6", doc):
+    allHeadings = h.findAll("h2, h3, h4, h5, h6", doc)
+    for el in allHeadings:
         h.addClass(doc, el, "heading")
     headings = []
-    for el in h.findAll(".heading:not(.settled)", doc):
+    for el in allHeadings:
+        if h.hasClass(doc, el, "settled"):
+            continue
         if scope == "doc" and h.treeAttr(el, "boilerplate"):
             continue
         headings.append(el)
@@ -107,7 +110,10 @@ def determineHeadingLevels(doc: t.SpecT, headings: list[t.ElementT]) -> None:
     skipLevel = float("inf")
     for header in headings:
         # Add the heading number.
-        level = int(header.tag[-1])
+        try:
+            level = int(header.tag[-1])
+        except ValueError:
+            continue
 
         # Reset, if this is a re-run.
         if header.get("data-level"):
